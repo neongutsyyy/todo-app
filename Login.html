@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link href="Login.css" rel="stylesheet" >
-    
+    <link href="Login.css" rel="stylesheet">
+    <script src="login-signup.js"></script>  
 </head>
 <body>
     
@@ -16,21 +16,19 @@
                 <header>LOGIN</header>
                 <form action="#">
                     <div class="input-field">
-                        <input type="email" placeholder="Email" class="input">
+                        <input type="email" placeholder="Email" class="input" id="login-username">
                     </div>
+
                     <div class="input-field">
-                        <input type="password" placeholder="Password" class="text">
-                        
-    
+                        <input type="password" placeholder="Password" class="text" id="login-password">
                     </div>
+
                     <div class="form-link">
                         <a href="#" class="forgot-pass">Forgot password?</a>
-                        
                     </div>
     
-    
                     <div class="button-field">
-                       <button>Login</button>
+                       <button onclick="login()">Login</button>
                     </div>
                     <div class="form-link">
                         <span>Don't have an account? <a href="signup.html" class="signup-link">Signup</a></span>
