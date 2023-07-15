@@ -1,0 +1,9 @@
+{
+  "users": [
+    {
+      "username": "dummy@email.com",
+      "password": "donotstoreyourpasswordhere",
+      "id": 1
+    }
+  ]
+}
