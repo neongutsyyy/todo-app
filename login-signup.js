@@ -54,13 +54,13 @@ function signup() {
 
             .catch(error => {
             console.error('Error:', error);
-            alert("Error occured while signing in")
+            alert("Error occured while Generating Token")
         });
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        document.getElementById('signup-error').textContent = 'An error occurred while signing up';
+        alert("Error occured while signig in!")
     });
 }
 
