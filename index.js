@@ -2,67 +2,65 @@ const form = document.getElementById("form");
 const input = document.getElementById("input");
 const todosUL = document.getElementById("todos");
 
-const todos = JSON.parse(localStorage.getItem("todos"));
+// Get the authenticated user's username or user ID
+const user = JSON.parse(localStorage.getItem("user"));
+const username = user.username;
 
-if (todos) {
-    todos.forEach((todo) => {
-        addTodo(todo);
-    });
-}
+// Retrieve user-specific todos from localStorage
+const todos = JSON.parse(localStorage.getItem(`todos_${username}`)) || [];
 
-form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    addTodo();
+// Display user-specific todos
+todos.forEach((todo) => {
+  addTodoElement(todo);
 });
 
-function addTodo(todo) {
-    let todoText = input.value;
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  addTodo();
+});
 
-    if (todo) {
-        todoText = todo.text;
-    }
+function addTodo() {
+  let todoText = input.value.trim();
 
-    if (todoText) {
-        const todoEl = document.createElement("li");
-        if (todo && todo.completed) {
-            todoEl.classList.add("completed");
-        }
+  if (todoText) {
+    const todo = {
+      text: todoText,
+      completed: false,
+    };
 
-        todoEl.innerText = todoText;
+    todos.push(todo);
 
-        todoEl.addEventListener("click", () => {
-            todoEl.classList.toggle("completed");
+    addTodoElement(todo);
 
-            updateLS();
-        });
-
-        todoEl.addEventListener("contextmenu", (e) => {
-            e.preventDefault();
-
-            todoEl.remove();
-
-            updateLS();
-        });
-
-        todosUL.appendChild(todoEl);
-
-        input.value = "";
-
-        updateLS();
-    }
+    input.value = "";
+    updateLocalStorage();
+  }
 }
 
-function updateLS() {
-    const todosEl = document.querySelectorAll("li");
+function addTodoElement(todo) {
+  const todoEl = document.createElement("li");
+  if (todo.completed) {
+    todoEl.classList.add("completed");
+  }
 
-    const todos = [];
+  todoEl.innerText = todo.text;
 
-    todosEl.forEach((todoEl) => {
-        todos.push({
-            text: todoEl.innerText,
-            completed: todoEl.classList.contains("completed"),
-        });
-    });
+  todoEl.addEventListener("click", () => {
+    todo.completed = !todo.completed;
+    todoEl.classList.toggle("completed");
+    updateLocalStorage();
+  });
 
-    localStorage.setItem("todos", JSON.stringify(todos));
+  todoEl.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    todoEl.remove();
+    todos.splice(todos.indexOf(todo), 1);
+    updateLocalStorage();
+  });
+
+  todosUL.appendChild(todoEl);
+}
+
+function updateLocalStorage() {
+  localStorage.setItem(`todos_${username}`, JSON.stringify(todos));
 }
