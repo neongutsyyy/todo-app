@@ -13,7 +13,10 @@ fetch('http://localhost:3000/users')
         localStorage.setItem('sessionToken', sessionToken);
 
         window.location.href = './index.html';
-    } else {
+    } 
+    
+    
+    else {
         alert("Invalid username or password");
     
     }
