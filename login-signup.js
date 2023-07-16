@@ -1,77 +1,55 @@
 function login() {
-const username = document.getElementById('login-username').value;
-const password = document.getElementById('login-password').value;
-
-fetch('http://localhost:3000/users')
-    .then(response => response.json())
-    .then(users => {
-    const user = users.find(u => u.username === username && u.password === password);
-    if (user) {
-        const sessionToken = generateSessionToken();
-
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('sessionToken', sessionToken);
-
-        window.location.href = './index.html';
-    } 
-    
-    
-    else {
-        alert("Invalid username or password");
-    
-    }
-    })
-    .catch(error => {
-    console.error('Error:', error);
-    alert("An error ocurred while logging in.")
-    });
-}
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
   
-function signup(e) {
-    // e.preventDefault();
-
+    fetch('http://localhost:3000/users')
+      .then(response => response.json())
+      .then(users => {
+        const user = users.find(u => u.username === username && u.password === password);
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          window.location.href = './index.html';
+        } else {
+          alert("Invalid username or password");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("An error occurred while logging in.");
+      });
+  }
+  
+  function signup() {
     const username = document.getElementById('signup-username').value;
     const password = document.getElementById('signup-password').value;
-    
+  
     fetch('http://localhost:3000/users')
-    .then(response => response.json())
-    .then(users => {
-      const userExists = users.some(u => u.username === username);
-      if (userExists) {
-        alert("User already exists");
-    } 
-      else {
-        
-        fetch('http://localhost:3000/users', {
+      .then(response => response.json())
+      .then(users => {
+        const userExists = users.some(u => u.username === username);
+        if (userExists) {
+          alert("User already exists");
+        } else {
+          fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
-            'Content-Type': 'application/json'
+              'Content-Type': 'application/json'
             },
             body: JSON.stringify({ username, password })
         })
         .then(response => response.json())
         .then(newUser => {
-            const sessionToken = generateSessionToken();
-            
-            localStorage.setItem('user', JSON.stringify(newUser));
-            localStorage.setItem('sessionToken', sessionToken);
-            
             window.location.href = './Login.html';
+            localStorage.setItem('user', JSON.stringify(newUser));
             })
-
             .catch(error => {
-            console.error('Error:', error);
-            alert("Error occured while Generating Token")
-        });
+              console.error('Error:', error);
+              alert("An error occurred while signing up.");
+            });
         }
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error:', error);
-        alert("Error occured while signig in!")
-    });
-}
-
-function generateSessionToken() {
-    // Generate a random session token using a unique identifier method, like UUID
-    return Math.random().toString(36).substr(2, 10);
-}
+        alert("An error occurred while signing up.");
+      });
+  }
