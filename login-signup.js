@@ -37,7 +37,8 @@ function signup() {
       if (users.length > 0) {
         alert("User already exists");
       } 
-        else {
+        
+      else {
         
         fetch('http://localhost:3000/users', {
             method: 'POST',
