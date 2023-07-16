@@ -27,17 +27,19 @@ fetch('http://localhost:3000/users')
     });
 }
   
-function signup() {
+function signup(e) {
+    // e.preventDefault();
+
     const username = document.getElementById('signup-username').value;
     const password = document.getElementById('signup-password').value;
     
-    fetch(`http://localhost:3000/users?username=${username}`)
+    fetch('http://localhost:3000/users')
     .then(response => response.json())
     .then(users => {
-      if (users.length > 0) {
+      const userExists = users.some(u => u.username === username);
+      if (userExists) {
         alert("User already exists");
-      } 
-        
+    } 
       else {
         
         fetch('http://localhost:3000/users', {
@@ -50,10 +52,11 @@ function signup() {
         .then(response => response.json())
         .then(newUser => {
             const sessionToken = generateSessionToken();
-            window.location.href = './Login.html';
-
+            
             localStorage.setItem('user', JSON.stringify(newUser));
             localStorage.setItem('sessionToken', sessionToken);
+            
+            window.location.href = './Login.html';
             })
 
             .catch(error => {
