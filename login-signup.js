@@ -29,7 +29,8 @@ function login() {
         const userExists = users.some(u => u.username === username);
         if (userExists) {
           alert("User already exists");
-        } else {
+        } 
+        else {
           fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
@@ -39,6 +40,7 @@ function login() {
         })
         .then(response => response.json())
         .then(newUser => {
+            alert("SignUp successfull!");
             window.location.href = './Login.html';
             localStorage.setItem('user', JSON.stringify(newUser));
             })
