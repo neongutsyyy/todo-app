@@ -8,7 +8,7 @@ function login() {
         const user = users.find(u => u.username === username && u.password === password);
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
-          window.location.href = './index.html';
+          window.location.href = './todo.html';
         } else {
           alert("Invalid username or password");
         }
@@ -41,7 +41,7 @@ function login() {
         .then(response => response.json())
         .then(newUser => {
             alert("SignUp successfull!");
-            window.location.href = './Login.html';
+            window.location.href = './login.html';
             localStorage.setItem('user', JSON.stringify(newUser));
             })
             .catch(error => {

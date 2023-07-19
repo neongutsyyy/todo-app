@@ -2,14 +2,13 @@ const form = document.getElementById("form");
 const input = document.getElementById("input");
 const todosUL = document.getElementById("todos");
 
-// Get the authenticated user's username or user ID
+// Get the authenticated user's username 
 const user = JSON.parse(localStorage.getItem("user"));
 const username = user.username;
 
 // Retrieve user-specific todos from localStorage
 const todos = JSON.parse(localStorage.getItem(`todos_${username}`)) || [];
 
-// Display user-specific todos
 todos.forEach((todo) => {
   addTodoElement(todo);
 });
