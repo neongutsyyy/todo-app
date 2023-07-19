@@ -41,7 +41,7 @@ function login() {
         .then(response => response.json())
         .then(newUser => {
             alert("SignUp successfull!");
-            window.location.href = './login.html';
+            window.location.href = './Login.html';
             localStorage.setItem('user', JSON.stringify(newUser));
             })
             .catch(error => {
